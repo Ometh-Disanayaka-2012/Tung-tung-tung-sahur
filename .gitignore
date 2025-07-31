@@ -38,3 +38,5 @@ logs/
 
 # TypeScript (if added later)
 *.tsbuildinfo
+
+gh-pages/
