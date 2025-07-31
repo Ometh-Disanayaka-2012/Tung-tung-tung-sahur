@@ -2,16 +2,16 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-    mode: 'development',
+    mode: 'production', // Use 'production' for GitHub Pages
     entry: './src/main.js',
     output: {
-        path: path.resolve(__dirname, 'docs'),
+        path: path.resolve(__dirname, 'docs'), // GitHub Pages reads from 'docs/'
         filename: 'bundle.js',
-        publicPath: '/' // Important for Phaser asset loading
+        publicPath: './' // ✅ Crucial for GitHub Pages — uses relative path
     },
     devServer: {
         static: {
-            directory: path.join(__dirname, 'dist'),
+            directory: path.join(__dirname, 'docs'), // match the output folder
         },
         compress: true,
         port: 8080,
@@ -36,7 +36,7 @@ module.exports = {
                 test: /\.(png|jpg|gif|mp3|wav)$/,
                 type: 'asset/resource',
                 generator: {
-                    filename: 'assets/[name][ext]' // Organizes assets in an assets folder
+                    filename: 'assets/[name][ext]' // Put assets in 'assets/' folder
                 }
             }
         ]
@@ -44,15 +44,14 @@ module.exports = {
     plugins: [
         new HtmlWebpackPlugin({
             template: './src/index.html',
-            favicon: './src/favicon.ico' // If you have one
+            favicon: './src/favicon.ico' // Optional, if you have a favicon
         })
     ],
-    // Add Phaser-specific configuration
     resolve: {
         fallback: {
-            "fs": false,
-            "path": false,
-            "crypto": false
+            fs: false,
+            path: false,
+            crypto: false
         }
     }
 };
